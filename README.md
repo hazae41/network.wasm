@@ -13,9 +13,6 @@ npm i @hazae41/network.wasm
 - Pre-bundled and streamed
 - Zero-copy memory slices
 
-## Modules
-- network
-
 ## Bundles
 - base16.wasm
 - sha3.wasm
