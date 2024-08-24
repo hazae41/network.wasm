@@ -20,6 +20,11 @@ npm i @hazae41/network.wasm
 - base16.wasm
 - sha3.wasm
 
+## Algorithms
+- Network
+- Base16
+- SHA-3
+
 ## Usage
 
 ```typescript
