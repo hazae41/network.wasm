@@ -20,8 +20,8 @@ opt-level = 3
 wasm-bindgen = { version = "0.2.93", default-features = false }
 crypto-bigint = { version = "0.5.5", default-features = false }
 sha3 = { version = "0.10.8", default-features = false }
-getrandom = { version = "=0.2.10", default-features = false, features = ["js"] }
-rand = { version = "=0.8.5", default-features = false, features = ["std", "std_rng"] }
+getrandom = { version = "0.2.15", default-features = false, features = ["js"] }
+rand = { version = "0.8.5", default-features = false, features = ["std", "std_rng"] }
 sha3_wasm = { path = "../../node_modules/@hazae41/sha3.wasm/dist/wasm"}
 base16_wasm = { path = "../../node_modules/@hazae41/base16.wasm/dist/wasm"}
 memory_wasm = { path = "../../node_modules/@hazae41/memory.wasm/dist/wasm"}
