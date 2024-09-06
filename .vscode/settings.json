@@ -1,9 +1,5 @@
 {
-  "deno.enable": true,
-  "deno.unstable": true,
-  "deno.enablePaths": [
-    "./src/deno",
-    "./example/deno",
-    "./bench/deno"
+  "rust-analyzer.linkedProjects": [
+    "./src/wasm/Cargo.toml"
   ]
 }
