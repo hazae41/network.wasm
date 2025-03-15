@@ -43,17 +43,11 @@ pub struct NetworkMixin {
 #[wasm_bindgen]
 impl NetworkMixin {
     #[wasm_bindgen(constructor)]
-    pub fn new(
-        chain_memory: &Memory,
-        contract_memory: &Memory,
-        receiver_nonce: &Memory,
-        nonce_memory: &Memory,
-    ) -> Self {
-        let mut mixin_bytes = vec![0u8; 160];
-        mixin_bytes[0..32].clone_from_slice(&chain_memory.inner);
-        mixin_bytes[32..64].clone_from_slice(&contract_memory.inner);
-        mixin_bytes[64..96].clone_from_slice(&receiver_nonce.inner);
-        mixin_bytes[96..128].clone_from_slice(&nonce_memory.inner);
+    pub fn new(contract_memory: &Memory, receiver_memory: &Memory, nonce_memory: &Memory) -> Self {
+        let mut mixin_bytes = vec![0u8; 128];
+        mixin_bytes[0..32].clone_from_slice(&contract_memory.inner);
+        mixin_bytes[0..64].clone_from_slice(&receiver_memory.inner);
+        mixin_bytes[64..96].clone_from_slice(&nonce_memory.inner);
 
         Self { mixin_bytes }
     }
@@ -73,7 +67,7 @@ impl NetworkMixin {
             proof_hasher.update(&secret_bytes);
             let proof_bytes = proof_hasher.finalize();
 
-            self.mixin_bytes[128..160].copy_from_slice(&proof_bytes);
+            self.mixin_bytes[96..128].copy_from_slice(&proof_bytes);
 
             let mut divisor_hasher = sha3::Keccak256::new();
             divisor_hasher.update(&self.mixin_bytes);
@@ -107,7 +101,7 @@ impl NetworkMixin {
         proof_hasher.update(&secret_memory.inner);
         let proof_bytes = proof_hasher.finalize();
 
-        self.mixin_bytes[128..160].copy_from_slice(&proof_bytes);
+        self.mixin_bytes[96..128].copy_from_slice(&proof_bytes);
 
         let mut divisor_hasher = sha3::Keccak256::new();
         divisor_hasher.update(&mut self.mixin_bytes);
@@ -128,7 +122,7 @@ impl NetworkMixin {
     pub fn verify_proof(&mut self, proof_memory: &Memory) -> Memory {
         use sha3::Digest;
 
-        self.mixin_bytes[128..160].copy_from_slice(&proof_memory.inner);
+        self.mixin_bytes[96..128].copy_from_slice(&proof_memory.inner);
 
         let mut divisor_hasher = sha3::Keccak256::new();
         divisor_hasher.update(&mut self.mixin_bytes);

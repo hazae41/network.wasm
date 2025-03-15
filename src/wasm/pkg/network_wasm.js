@@ -403,17 +403,15 @@ export class NetworkMixin {
         wasm.__wbg_networkmixin_free(ptr, 0);
     }
     /**
-    * @param {Memory} chain_memory
     * @param {Memory} contract_memory
-    * @param {Memory} receiver_nonce
+    * @param {Memory} receiver_memory
     * @param {Memory} nonce_memory
     */
-    constructor(chain_memory, contract_memory, receiver_nonce, nonce_memory) {
-        _assertClass(chain_memory, Memory);
+    constructor(contract_memory, receiver_memory, nonce_memory) {
         _assertClass(contract_memory, Memory);
-        _assertClass(receiver_nonce, Memory);
+        _assertClass(receiver_memory, Memory);
         _assertClass(nonce_memory, Memory);
-        const ret = wasm.networkmixin_new(chain_memory.__wbg_ptr, contract_memory.__wbg_ptr, receiver_nonce.__wbg_ptr, nonce_memory.__wbg_ptr);
+        const ret = wasm.networkmixin_new(contract_memory.__wbg_ptr, receiver_memory.__wbg_ptr, nonce_memory.__wbg_ptr);
         this.__wbg_ptr = ret >>> 0;
         NetworkMixinFinalization;
         return this;
@@ -530,10 +528,7 @@ async function __wbg_load(module, imports) {
 function __wbg_get_imports() {
     const imports = {};
     imports.wbg = {};
-    imports.wbg.__wbindgen_object_drop_ref = function(arg0) {
-        takeObject(arg0);
-    };
-    imports.wbg.__wbg_crypto_c48a774b022d20ac = function(arg0) {
+    imports.wbg.__wbg_crypto_1d1f22824a6a080c = function(arg0) {
         const ret = getObject(arg0).crypto;
         return addHeapObject(ret);
     };
@@ -542,15 +537,15 @@ function __wbg_get_imports() {
         const ret = typeof(val) === 'object' && val !== null;
         return ret;
     };
-    imports.wbg.__wbg_process_298734cf255a885d = function(arg0) {
+    imports.wbg.__wbg_process_4a72847cc503995b = function(arg0) {
         const ret = getObject(arg0).process;
         return addHeapObject(ret);
     };
-    imports.wbg.__wbg_versions_e2e78e134e3e5d01 = function(arg0) {
+    imports.wbg.__wbg_versions_f686565e586dd935 = function(arg0) {
         const ret = getObject(arg0).versions;
         return addHeapObject(ret);
     };
-    imports.wbg.__wbg_node_1cd7a5d853dbea79 = function(arg0) {
+    imports.wbg.__wbg_node_104a2ff8d6ea03a2 = function(arg0) {
         const ret = getObject(arg0).node;
         return addHeapObject(ret);
     };
@@ -558,7 +553,10 @@ function __wbg_get_imports() {
         const ret = typeof(getObject(arg0)) === 'string';
         return ret;
     };
-    imports.wbg.__wbg_require_8f08ceecec0f4fee = function() { return handleError(function () {
+    imports.wbg.__wbindgen_object_drop_ref = function(arg0) {
+        takeObject(arg0);
+    };
+    imports.wbg.__wbg_require_cca90b1a94a0255b = function() { return handleError(function () {
         const ret = module.require;
         return addHeapObject(ret);
     }, arguments) };
@@ -570,14 +568,14 @@ function __wbg_get_imports() {
         const ret = getStringFromWasm0(arg0, arg1);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbg_msCrypto_bcb970640f50a1e8 = function(arg0) {
+    imports.wbg.__wbg_msCrypto_eb05e62b530a1508 = function(arg0) {
         const ret = getObject(arg0).msCrypto;
         return addHeapObject(ret);
     };
-    imports.wbg.__wbg_randomFillSync_dc1e9a60c158336d = function() { return handleError(function (arg0, arg1) {
+    imports.wbg.__wbg_randomFillSync_5c9c955aa56b6049 = function() { return handleError(function (arg0, arg1) {
         getObject(arg0).randomFillSync(takeObject(arg1));
     }, arguments) };
-    imports.wbg.__wbg_getRandomValues_37fa2ca9e4e07fab = function() { return handleError(function (arg0, arg1) {
+    imports.wbg.__wbg_getRandomValues_3aa56aa6edec874c = function() { return handleError(function (arg0, arg1) {
         getObject(arg0).getRandomValues(getObject(arg1));
     }, arguments) };
     imports.wbg.__wbg_newnoargs_76313bd6ff35d0f2 = function(arg0, arg1) {

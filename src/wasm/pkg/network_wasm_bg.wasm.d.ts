@@ -6,7 +6,7 @@ export function networksecret_to_secret(a: number): number;
 export function networksecret_to_proof(a: number): number;
 export function networksecret_to_value(a: number): number;
 export function __wbg_networkmixin_free(a: number, b: number): void;
-export function networkmixin_new(a: number, b: number, c: number, d: number): number;
+export function networkmixin_new(a: number, b: number, c: number): number;
 export function networkmixin_generate(a: number, b: number): number;
 export function networkmixin_verify_secret(a: number, b: number): number;
 export function networkmixin_verify_proof(a: number, b: number): number;

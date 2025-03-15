@@ -76,12 +76,11 @@ export class Memory {
 export class NetworkMixin {
   [Symbol.dispose](): void;
 /**
-* @param {Memory} chain_memory
 * @param {Memory} contract_memory
-* @param {Memory} receiver_nonce
+* @param {Memory} receiver_memory
 * @param {Memory} nonce_memory
 */
-  constructor(chain_memory: Memory, contract_memory: Memory, receiver_nonce: Memory, nonce_memory: Memory);
+  constructor(contract_memory: Memory, receiver_memory: Memory, nonce_memory: Memory);
 /**
 * @param {Memory} minimum_memory
 * @returns {NetworkSecret}
@@ -125,7 +124,7 @@ export interface InitOutput {
   readonly networksecret_to_proof: (a: number) => number;
   readonly networksecret_to_value: (a: number) => number;
   readonly __wbg_networkmixin_free: (a: number, b: number) => void;
-  readonly networkmixin_new: (a: number, b: number, c: number, d: number) => number;
+  readonly networkmixin_new: (a: number, b: number, c: number) => number;
   readonly networkmixin_generate: (a: number, b: number) => number;
   readonly networkmixin_verify_secret: (a: number, b: number) => number;
   readonly networkmixin_verify_proof: (a: number, b: number) => number;
