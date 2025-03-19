@@ -426,6 +426,15 @@ export class NetworkMixin {
         return NetworkSecret.__wrap(ret);
     }
     /**
+    * @param {Memory} proof_memory
+    * @returns {Memory}
+    */
+    verify_proof(proof_memory) {
+        _assertClass(proof_memory, Memory);
+        const ret = wasm.networkmixin_verify_proof(this.__wbg_ptr, proof_memory.__wbg_ptr);
+        return Memory.__wrap(ret);
+    }
+    /**
     * @param {Memory} secret_memory
     * @returns {Memory}
     */
@@ -435,12 +444,21 @@ export class NetworkMixin {
         return Memory.__wrap(ret);
     }
     /**
-    * @param {Memory} proof_memory
+    * @param {Memory} proofs_memory
     * @returns {Memory}
     */
-    verify_proof(proof_memory) {
-        _assertClass(proof_memory, Memory);
-        const ret = wasm.networkmixin_verify_proof(this.__wbg_ptr, proof_memory.__wbg_ptr);
+    verify_proofs(proofs_memory) {
+        _assertClass(proofs_memory, Memory);
+        const ret = wasm.networkmixin_verify_proofs(this.__wbg_ptr, proofs_memory.__wbg_ptr);
+        return Memory.__wrap(ret);
+    }
+    /**
+    * @param {Memory} secrets_memory
+    * @returns {Memory}
+    */
+    verify_secrets(secrets_memory) {
+        _assertClass(secrets_memory, Memory);
+        const ret = wasm.networkmixin_verify_secrets(this.__wbg_ptr, secrets_memory.__wbg_ptr);
         return Memory.__wrap(ret);
     }
 }

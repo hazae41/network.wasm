@@ -87,15 +87,25 @@ export class NetworkMixin {
 */
   generate(minimum_memory: Memory): NetworkSecret;
 /**
+* @param {Memory} proof_memory
+* @returns {Memory}
+*/
+  verify_proof(proof_memory: Memory): Memory;
+/**
 * @param {Memory} secret_memory
 * @returns {Memory}
 */
   verify_secret(secret_memory: Memory): Memory;
 /**
-* @param {Memory} proof_memory
+* @param {Memory} proofs_memory
 * @returns {Memory}
 */
-  verify_proof(proof_memory: Memory): Memory;
+  verify_proofs(proofs_memory: Memory): Memory;
+/**
+* @param {Memory} secrets_memory
+* @returns {Memory}
+*/
+  verify_secrets(secrets_memory: Memory): Memory;
 }
 /**
 */
@@ -126,8 +136,10 @@ export interface InitOutput {
   readonly __wbg_networkmixin_free: (a: number, b: number) => void;
   readonly networkmixin_new: (a: number, b: number, c: number) => number;
   readonly networkmixin_generate: (a: number, b: number) => number;
-  readonly networkmixin_verify_secret: (a: number, b: number) => number;
   readonly networkmixin_verify_proof: (a: number, b: number) => number;
+  readonly networkmixin_verify_secret: (a: number, b: number) => number;
+  readonly networkmixin_verify_proofs: (a: number, b: number) => number;
+  readonly networkmixin_verify_secrets: (a: number, b: number) => number;
   readonly keccak256: (a: number) => number;
   readonly __wbg_keccak256hasher_free: (a: number, b: number) => void;
   readonly keccak256hasher_new: () => number;

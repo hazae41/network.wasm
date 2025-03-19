@@ -94,6 +94,27 @@ impl NetworkMixin {
     }
 
     #[wasm_bindgen]
+    pub fn verify_proof(&mut self, proof_memory: &Memory) -> Memory {
+        use sha3::Digest;
+
+        self.mixin_bytes[96..128].copy_from_slice(&proof_memory.inner);
+
+        let mut divisor_hasher = sha3::Keccak256::new();
+        divisor_hasher.update(&mut self.mixin_bytes);
+        let divisor_bytes = divisor_hasher.finalize();
+
+        let divisor_u256 = U256::from_be_slice(&divisor_bytes);
+
+        if divisor_u256.is_zero().into() {
+            return Memory::new(U256::ZERO.to_be_bytes().to_vec());
+        }
+
+        let value_u256 = U256::MAX.wrapping_div(&divisor_u256);
+
+        Memory::new(value_u256.to_be_bytes().to_vec())
+    }
+
+    #[wasm_bindgen]
     pub fn verify_secret(&mut self, secret_memory: &Memory) -> Memory {
         use sha3::Digest;
 
@@ -119,23 +140,70 @@ impl NetworkMixin {
     }
 
     #[wasm_bindgen]
-    pub fn verify_proof(&mut self, proof_memory: &Memory) -> Memory {
+    pub fn verify_proofs(&mut self, proofs_memory: &Memory) -> Memory {
         use sha3::Digest;
 
-        self.mixin_bytes[96..128].copy_from_slice(&proof_memory.inner);
+        let count = proofs_memory.inner.len() / 32;
 
-        let mut divisor_hasher = sha3::Keccak256::new();
-        divisor_hasher.update(&mut self.mixin_bytes);
-        let divisor_bytes = divisor_hasher.finalize();
+        let mut total_u256 = U256::ZERO;
 
-        let divisor_u256 = U256::from_be_slice(&divisor_bytes);
+        for i in 0..count {
+            let start = i * 32;
+            let end = start + 32;
 
-        if divisor_u256.is_zero().into() {
-            return Memory::new(U256::ZERO.to_be_bytes().to_vec());
+            self.mixin_bytes[96..128].copy_from_slice(&proofs_memory.inner[start..end]);
+
+            let mut divisor_hasher = sha3::Keccak256::new();
+            divisor_hasher.update(&self.mixin_bytes);
+            let divisor_bytes = divisor_hasher.finalize();
+
+            let divisor_u256 = U256::from_be_slice(&divisor_bytes);
+
+            if divisor_u256.is_zero().into() {
+                continue;
+            }
+
+            let value_u256 = U256::MAX.wrapping_div(&divisor_u256);
+
+            total_u256 = total_u256.wrapping_add(&value_u256);
         }
 
-        let value_u256 = U256::MAX.wrapping_div(&divisor_u256);
+        Memory::new(total_u256.to_be_bytes().to_vec())
+    }
 
-        Memory::new(value_u256.to_be_bytes().to_vec())
+    #[wasm_bindgen]
+    pub fn verify_secrets(&mut self, secrets_memory: &Memory) -> Memory {
+        use sha3::Digest;
+
+        let count = secrets_memory.inner.len() / 32;
+
+        let mut total_u256 = U256::ZERO;
+
+        for i in 0..count {
+            let start = i * 32;
+            let end = start + 32;
+
+            let mut proof_hasher = sha3::Keccak256::new();
+            proof_hasher.update(&secrets_memory.inner[start..end]);
+            let proof_bytes = proof_hasher.finalize();
+
+            self.mixin_bytes[96..128].copy_from_slice(&proof_bytes);
+
+            let mut divisor_hasher = sha3::Keccak256::new();
+            divisor_hasher.update(&self.mixin_bytes);
+            let divisor_bytes = divisor_hasher.finalize();
+
+            let divisor_u256 = U256::from_be_slice(&divisor_bytes);
+
+            if divisor_u256.is_zero().into() {
+                continue;
+            }
+
+            let value_u256 = U256::MAX.wrapping_div(&divisor_u256);
+
+            total_u256 = total_u256.wrapping_add(&value_u256);
+        }
+
+        Memory::new(total_u256.to_be_bytes().to_vec())
     }
 }
