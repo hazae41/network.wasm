@@ -31,25 +31,18 @@ import { Memory, NetworkMixin, NetworkWasm, base16_decode_mixed, base16_encode_l
 await NetworkWasm.initBundled();
 
 /**
- * Chain ID
+ * Version
  */
-const chainIdBigInt = 100n
-const chainIdBase16 = chainIdBigInt.toString(16).padStart(64, "0")
-using chainIdMemory = base16_decode_mixed(chainIdBase16)
+const versionZeroHex = "0x1"
+const versionBase16 = versionZeroHex.slice(2).padStart(64, "0")
+using versionMemory = base16_decode_mixed(versionBase16)
 
 /**
- * Contract address
+ * Address
  */
-const contractZeroHex = "0xF1eC047cbd662607BBDE9Badd572cf0A23E1130B"
-const contractBase16 = contractZeroHex.slice(2).padStart(64, "0")
-using contractMemory = base16_decode_mixed(contractBase16)
-
-/**
- * Receiver address
- */
-const receiverZeroHex = "0x5B38Da6a701c568545dCfcB03FcB875f56beddC4"
-const receiverBase16 = receiverZeroHex.slice(2).padStart(64, "0")
-using receiverMemory = base16_decode_mixed(receiverBase16)
+const addressZeroHex = "0x5B38Da6a701c568545dCfcB03FcB875f56beddC4"
+const addressBase16 = addressZeroHex.slice(2).padStart(64, "0")
+using addressMemory = base16_decode_mixed(addressBase16)
 
 /**
  * Nonce
@@ -65,7 +58,7 @@ const minimumBigInt = 100000n
 const minimumBase16 = minimumBigInt.toString(16).padStart(64, "0")
 using minimumMemory = base16_decode_mixed(minimumBase16)
 
-using mixin = new NetworkMixin(chainIdMemory, contractMemory, receiverMemory, nonceMemory)
+using mixin = new NetworkMixin(versionMemory, addressMemory, nonceMemory)
 
 const start = performance.now()
 using generated = mixin.generate(minimumMemory)

@@ -403,15 +403,15 @@ export class NetworkMixin {
         wasm.__wbg_networkmixin_free(ptr, 0);
     }
     /**
-    * @param {Memory} contract_memory
-    * @param {Memory} receiver_memory
+    * @param {Memory} version_memory
+    * @param {Memory} address_memory
     * @param {Memory} nonce_memory
     */
-    constructor(contract_memory, receiver_memory, nonce_memory) {
-        _assertClass(contract_memory, Memory);
-        _assertClass(receiver_memory, Memory);
+    constructor(version_memory, address_memory, nonce_memory) {
+        _assertClass(version_memory, Memory);
+        _assertClass(address_memory, Memory);
         _assertClass(nonce_memory, Memory);
-        const ret = wasm.networkmixin_new(contract_memory.__wbg_ptr, receiver_memory.__wbg_ptr, nonce_memory.__wbg_ptr);
+        const ret = wasm.networkmixin_new(version_memory.__wbg_ptr, address_memory.__wbg_ptr, nonce_memory.__wbg_ptr);
         this.__wbg_ptr = ret >>> 0;
         NetworkMixinFinalization;
         return this;

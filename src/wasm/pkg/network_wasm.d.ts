@@ -76,11 +76,11 @@ export class Memory {
 export class NetworkMixin {
   [Symbol.dispose](): void;
 /**
-* @param {Memory} contract_memory
-* @param {Memory} receiver_memory
+* @param {Memory} version_memory
+* @param {Memory} address_memory
 * @param {Memory} nonce_memory
 */
-  constructor(contract_memory: Memory, receiver_memory: Memory, nonce_memory: Memory);
+  constructor(version_memory: Memory, address_memory: Memory, nonce_memory: Memory);
 /**
 * @param {Memory} minimum_memory
 * @returns {NetworkSecret}

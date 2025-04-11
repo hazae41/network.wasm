@@ -43,10 +43,10 @@ pub struct NetworkMixin {
 #[wasm_bindgen]
 impl NetworkMixin {
     #[wasm_bindgen(constructor)]
-    pub fn new(contract_memory: &Memory, receiver_memory: &Memory, nonce_memory: &Memory) -> Self {
+    pub fn new(version_memory: &Memory, address_memory: &Memory, nonce_memory: &Memory) -> Self {
         let mut mixin_bytes = vec![0u8; 128];
-        mixin_bytes[0..32].clone_from_slice(&contract_memory.inner);
-        mixin_bytes[32..64].clone_from_slice(&receiver_memory.inner);
+        mixin_bytes[0..32].clone_from_slice(&version_memory.inner);
+        mixin_bytes[32..64].clone_from_slice(&address_memory.inner);
         mixin_bytes[64..96].clone_from_slice(&nonce_memory.inner);
 
         Self { mixin_bytes }
