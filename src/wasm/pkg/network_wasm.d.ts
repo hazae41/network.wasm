@@ -1,57 +1,18 @@
 /* tslint:disable */
 /* eslint-disable */
-/**
-* @param {Memory} bytes
-* @returns {string}
-*/
 export function base16_encode_lower(bytes: Memory): string;
-/**
-* @param {Memory} bytes
-* @returns {string}
-*/
 export function base16_encode_upper(bytes: Memory): string;
-/**
-* @param {string} text
-* @returns {Memory}
-*/
 export function base16_decode_mixed(text: string): Memory;
-/**
-* @param {string} text
-* @returns {Memory}
-*/
 export function base16_decode_lower(text: string): Memory;
-/**
-* @param {string} text
-* @returns {Memory}
-*/
 export function base16_decode_upper(text: string): Memory;
-/**
-* @param {Memory} data
-* @returns {Memory}
-*/
 export function keccak256(data: Memory): Memory;
-/**
-*/
 export class Keccak256Hasher {
   [Symbol.dispose](): void;
-/**
-*/
   constructor();
-/**
-* @returns {Keccak256Hasher}
-*/
   clone(): Keccak256Hasher;
-/**
-* @param {Memory} data
-*/
   update(data: Memory): void;
-/**
-* @returns {Memory}
-*/
   finalize(): Memory;
 }
-/**
-*/
 export class Memory {
   [Symbol.dispose](): void;
 /**
@@ -71,57 +32,20 @@ export class Memory {
 */
   get bytes(): Uint8Array;
 }
-/**
-*/
 export class NetworkMixin {
   [Symbol.dispose](): void;
-/**
-* @param {Memory} version_memory
-* @param {Memory} address_memory
-* @param {Memory} nonce_memory
-*/
   constructor(version_memory: Memory, address_memory: Memory, nonce_memory: Memory);
-/**
-* @param {Memory} minimum_memory
-* @returns {NetworkSecret}
-*/
   generate(minimum_memory: Memory): NetworkSecret;
-/**
-* @param {Memory} proof_memory
-* @returns {Memory}
-*/
   verify_proof(proof_memory: Memory): Memory;
-/**
-* @param {Memory} secret_memory
-* @returns {Memory}
-*/
   verify_secret(secret_memory: Memory): Memory;
-/**
-* @param {Memory} proofs_memory
-* @returns {Memory}
-*/
   verify_proofs(proofs_memory: Memory): Memory;
-/**
-* @param {Memory} secrets_memory
-* @returns {Memory}
-*/
   verify_secrets(secrets_memory: Memory): Memory;
 }
-/**
-*/
 export class NetworkSecret {
+  private constructor();
   [Symbol.dispose](): void;
-/**
-* @returns {Memory}
-*/
   to_secret(): Memory;
-/**
-* @returns {Memory}
-*/
   to_proof(): Memory;
-/**
-* @returns {Memory}
-*/
   to_value(): Memory;
 }
 
@@ -146,20 +70,23 @@ export interface InitOutput {
   readonly keccak256hasher_clone: (a: number) => number;
   readonly keccak256hasher_update: (a: number, b: number) => void;
   readonly keccak256hasher_finalize: (a: number) => number;
-  readonly base16_encode_lower: (a: number, b: number) => void;
-  readonly base16_encode_upper: (a: number, b: number) => void;
-  readonly base16_decode_mixed: (a: number, b: number, c: number) => void;
-  readonly base16_decode_lower: (a: number, b: number, c: number) => void;
-  readonly base16_decode_upper: (a: number, b: number, c: number) => void;
+  readonly base16_encode_lower: (a: number) => [number, number];
+  readonly base16_encode_upper: (a: number) => [number, number];
+  readonly base16_decode_mixed: (a: number, b: number) => [number, number, number];
+  readonly base16_decode_lower: (a: number, b: number) => [number, number, number];
+  readonly base16_decode_upper: (a: number, b: number) => [number, number, number];
   readonly __wbg_memory_free: (a: number, b: number) => void;
   readonly memory_new: (a: number, b: number) => number;
   readonly memory_ptr: (a: number) => number;
   readonly memory_len: (a: number) => number;
-  readonly __wbindgen_malloc: (a: number, b: number) => number;
   readonly __wbindgen_exn_store: (a: number) => void;
-  readonly __wbindgen_add_to_stack_pointer: (a: number) => number;
+  readonly __externref_table_alloc: () => number;
+  readonly __wbindgen_export_2: WebAssembly.Table;
+  readonly __wbindgen_malloc: (a: number, b: number) => number;
   readonly __wbindgen_free: (a: number, b: number, c: number) => void;
   readonly __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;
+  readonly __externref_table_dealloc: (a: number) => void;
+  readonly __wbindgen_start: () => void;
 }
 
 export type SyncInitInput = BufferSource | WebAssembly.Module;
